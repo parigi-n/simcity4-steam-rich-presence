@@ -1,6 +1,6 @@
 # SC4SteamRichPresence
 
-A SimCity 4 plugin that pushes the current city, region and population to Steam Rich Presence.
+A SimCity 4 plugin that pushes the current city, region and population to Steam Rich Presence. Also doubles as a proof of concept for hooking the Steamworks API onto a pre-Steamworks game (SC4 ships from 2003 and has no native Steam integration).
 
 ## What you see
 
@@ -11,6 +11,9 @@ Friends can see this in Steam's "View Game Info" dialog (right-click your name i
 ![View Game Info dialog showing the rich presence](docs/img.png)
 
 ## Install
+
+> [!NOTE]
+> Only tested on Linux via Steam Proton so far. The plugin should work fine on native Windows too (32-bit MSVC ABI all the way through), but no one has tried yet. If you do, open an issue.
 
 Grab the latest zip from the [releases page](https://github.com/parigi-n/simcity4-steam-rich-presence/releases) and drop both DLLs in your SimCity 4 `Plugins/` folder:
 
@@ -61,6 +64,3 @@ The output DLL lands in `build/SC4SteamRichPresence.dll`.
 **SC4's AppID belongs to EA, which puts a hard limit on Steam Rich Presence.** The status text gets pushed and Steam stores it server-side, but it only shows up in the "View Game Info" dialog, not the main friend list line. To get rich text in the main friend list, the AppID owner has to register localization tokens in the Steam Partner backend. EA never did that for SC4 and probably never will. There is no client-side workaround.
 
 **MinGW ABI patch on `cIGZString.h`.** SC4 was built with MSVC. MSVC and MinGW order overloaded virtual methods differently in vtables, which causes hard crashes when SC4 calls back into our `cIGZString`-derived buffers (like the one passed to `GetCityName`). The fix is a `#if __MINGW32__` block in `external/gzcom-dll/gzcom-dll/include/cIGZString.h` that reverses overload groups so the MinGW vtable matches MSVC's. Only `cIGZString.h` is patched. If you start touching other gzcom-dll interfaces with overloaded virtuals, you may need to patch them the same way. A cleaner long term path is to switch the toolchain to clang targeting MSVC ABI (`--target=i686-pc-windows-msvc`) plus [xwin](https://github.com/Jake-Shadle/xwin) for the Windows SDK, then drop the patches entirely.
-
-> [!NOTE]
-> Only tested on Linux via Steam Proton so far. The plugin should work fine on native Windows too (32-bit MSVC ABI all the way through), but no one has tried yet. If you do, open an issue.
