@@ -12,7 +12,7 @@ Friends can see this in Steam's "View Game Info" dialog (right-click your name i
 
 ## Install
 
-Drop both files in your SimCity 4 `Plugins/` folder:
+Grab the latest zip from the [releases page](https://github.com/parigi-n/simcity4-steam-rich-presence/releases) and drop both DLLs in your SimCity 4 `Plugins/` folder:
 
 - `SC4SteamRichPresence.dll`
 - `steam_api.dll`
@@ -62,4 +62,5 @@ The output DLL lands in `build/SC4SteamRichPresence.dll`.
 
 **MinGW ABI patch on `cIGZString.h`.** SC4 was built with MSVC. MSVC and MinGW order overloaded virtual methods differently in vtables, which causes hard crashes when SC4 calls back into our `cIGZString`-derived buffers (like the one passed to `GetCityName`). The fix is a `#if __MINGW32__` block in `external/gzcom-dll/gzcom-dll/include/cIGZString.h` that reverses overload groups so the MinGW vtable matches MSVC's. Only `cIGZString.h` is patched. If you start touching other gzcom-dll interfaces with overloaded virtuals, you may need to patch them the same way. A cleaner long term path is to switch the toolchain to clang targeting MSVC ABI (`--target=i686-pc-windows-msvc`) plus [xwin](https://github.com/Jake-Shadle/xwin) for the Windows SDK, then drop the patches entirely.
 
-**Tested with Proton.** Should work fine on Windows too, but only tested on Linux via Steam Proton so far.
+> [!NOTE]
+> Only tested on Linux via Steam Proton so far. The plugin should work fine on native Windows too (32-bit MSVC ABI all the way through), but no one has tried yet. If you do, open an issue.
