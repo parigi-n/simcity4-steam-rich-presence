@@ -13,7 +13,7 @@ Friends can see this in Steam's "View Game Info" dialog (right-click your name i
 ## Install
 
 > [!NOTE]
-> Only tested on Linux via Steam Proton so far. The plugin should work fine on native Windows too (32-bit MSVC ABI all the way through), but no one has tried yet. If you do, open an issue.
+> Only tested on Linux via Steam Proton so far. The plugin should work fine on native Windows too, but no one has tried yet. If you do, open an issue.
 
 Grab the latest zip from the [releases page](https://github.com/parigi-n/simcity4-steam-rich-presence/releases) and drop both DLLs in your SimCity 4 `Plugins/` folder:
 
