@@ -62,6 +62,4 @@ The output DLL lands in `build/SC4SteamRichPresence.dll`.
 
 **MinGW ABI patch on `cIGZString.h`.** SC4 was built with MSVC. MSVC and MinGW order overloaded virtual methods differently in vtables, which causes hard crashes when SC4 calls back into our `cIGZString`-derived buffers (like the one passed to `GetCityName`). The fix is a `#if __MINGW32__` block in `external/gzcom-dll/gzcom-dll/include/cIGZString.h` that reverses overload groups so the MinGW vtable matches MSVC's. Only `cIGZString.h` is patched. If you start touching other gzcom-dll interfaces with overloaded virtuals, you may need to patch them the same way. A cleaner long term path is to switch the toolchain to clang targeting MSVC ABI (`--target=i686-pc-windows-msvc`) plus [xwin](https://github.com/Jake-Shadle/xwin) for the Windows SDK, then drop the patches entirely.
 
-**Population accuracy.** We read residential population from the live simulator (`cISC4ResidentialSimulator::GetPopulation`). The regional cache value (`cISC4RegionalCity::GetPopulation`) hits the same vtable overload issue and returns garbage, so we ignore it.
-
 **Tested with Proton.** Should work fine on Windows too, but only tested on Linux via Steam Proton so far.
