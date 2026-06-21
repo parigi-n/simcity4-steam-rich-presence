@@ -1,6 +1,6 @@
 # SC4SteamRichPresence
 
-A SimCity 4 plugin that pushes the current city, region and population to Steam Rich Presence. Also doubles as a proof of concept for hooking the Steamworks API onto a pre-Steamworks game (SC4 ships from 2003 and has no native Steam integration).
+A SimCity 4 plugin that pushes the current city, region and population to Steam Rich Presence. Also doubles as a proof of concept for hooking the Steamworks API into SimCity 4.
 
 ## What you see
 
